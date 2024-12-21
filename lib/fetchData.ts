@@ -1,4 +1,4 @@
-const api = "https://avt-server.onrender.com/api"
+const api = process.env.NEXT_PUBLIC_API_URL
 
 export const getApi = async (url: string, tolen?: string, options?: RequestInit) => {
     const res = await fetch(`${api}/${url}`, {
