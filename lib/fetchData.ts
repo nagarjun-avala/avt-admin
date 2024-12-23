@@ -1,58 +1,47 @@
+import axios from 'axios'
 const api = process.env.NEXT_PUBLIC_API_URL
 
-export const getApi = async (url: string, tolen?: string, options?: RequestInit) => {
-    const res = await fetch(`${api}/${url}`, {
-        ...options,
+export const getDataAPI = async (url: string, token?: string) => {
+    const res = await axios.get(`${api}/${url}`, {
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${tolen}`,
-            ...(options?.headers || {})
+            Authorization: token
         }
     })
-    const data = await res.json()
-    return data
+    return res
 }
 
-export const postApi = async (url: string, tolen?: string, body?: unknown, options?: RequestInit) => {
-    const res = await fetch(`${api}/${url}`, {
-        ...options,
-        method: "POST",
+export const postDataAPI = async (url: string, post: unknown, token?: string) => {
+    const res = await axios.post(`${api}/${url}`,post, {
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${tolen}`,
-            ...(options?.headers || {})
-        },
-        body: JSON.stringify(body)
-    })
-    const data = await res.json()
-    return data
-}
-
-export const putApi = async (url: string, tolen?: string, body?: unknown, options?: RequestInit) => {
-    const res = await fetch(`${api}/${url}`, {
-        ...options,
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${tolen}`,
-            ...(options?.headers || {})
-        },
-        body: JSON.stringify(body)
-    })
-    const data = await res.json()
-    return data
-}
-
-export const deleteApi = async (url: string, tolen?: string, options?: RequestInit) => {
-    const res = await fetch(`${api}/${url}`, {
-        ...options,
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${tolen}`,
-            ...(options?.headers || {})
+            Authorization: token
         }
     })
-    const data = await res.json()
-    return data
+    return res
+}
+
+export const putDataAPI = async (url: string, post: unknown, token?: string) => {
+    const res = await axios.put(`${api}/${url}`,post, {
+        headers: {
+            Authorization: token
+        }
+    })
+    return res
+}
+
+export const patchDataAPI = async (url: string, post: unknown, token?: string) => {
+    const res = await axios.patch(`${api}/${url}`,post, {
+        headers: {
+            Authorization: token
+        }
+    })
+    return res
+}
+
+export const deleteDataAPI = async (url: string, token?: string) => {
+    const res = await axios.delete(`${api}/${url}`, {
+        headers: {
+            Authorization: token
+        }
+    })
+    return res
 }

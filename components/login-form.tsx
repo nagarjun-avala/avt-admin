@@ -8,28 +8,46 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { useState } from "react"
+import { useDispatch, useSelector } from 'react-redux'
+
+import { login } from "@/redux/actions/authAction"
+import Link from "next/link"
+import { AppDispatch, RootState } from '@/redux/store';
+import { Label } from "@/components/ui/label"
+import {  LoginAdmin } from "@/lib/types"
+
+
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  })
+  // TODO: Empty init data after completion of login development *Authentication* 
+  const initalState: Partial<LoginAdmin> = {
+    username: "admin",
+    password: "Admin@123",
+    // Add other properties of Admin type if needed
+  }
+  const notify = useSelector((state: RootState) => state.notify)
+  const [userData, setUserData] = useState(initalState)
+  const [typePass, setTypePass] = useState(true)
+  const { username, password } = userData
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser((prev) => ({
+  const dispatch = useDispatch<AppDispatch>()
+
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserData((prev) => ({
       ...prev,
-      [e.target.id]: e.target.value,
+      [e.target.name]: e.target.value,
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(user)
+    console.log(userData)
+    dispatch(login(userData))    
   }
 
   return (
@@ -39,6 +57,7 @@ export function LoginForm({
           <CardTitle className="text-xl">Welcome back</CardTitle>
         </CardHeader>
         <CardContent>
+          
           <form onSubmit={handleSubmit}>
             <div className="grid gap-6 mb-5">
               <div className="grid gap-6">
@@ -46,22 +65,33 @@ export function LoginForm({
                   <Label htmlFor="username">Username</Label>
                   <Input
                     id="username"
-                    type="username"
+                    name="username"
+                    type="text"
+                    value={username}
                     autoComplete="off"
-                    onChange={handleChange}
+                    onChange={handleChangeInput}
                     required
                   />
                 </div>
-                <div className="grid gap-2">
+                <div className="grid gap-2 relative">
                   <div className="flex items-center">
                     <Label htmlFor="password">Password</Label>
                   </div>
-                  <Input 
-                  id="password" 
-                  type="password"
-                  onChange={handleChange}
-                  required />
+                  <Input
+                    id="password"
+                    name="password"
+                    type={typePass ? "password" : "text"}
+                    value={password}
+                    onChange={handleChangeInput}
+                    required />
+                  <small className="cursor-pointer absolute top-[70%] right-2 translate-y-[-50%] opacity-50" onClick={() => setTypePass(!typePass)}>{typePass ? "Show" : "Hide"}</small>
                 </div>
+                {notify?.error && <p
+                  className={cn("text-sm text-center font-medium text-destructive")}
+                  {...props}
+                >
+                  ! {notify?.error}
+                </p>}
                 <Button type="submit" className="w-full">
                   Login
                 </Button>
@@ -70,9 +100,9 @@ export function LoginForm({
           </form>
         </CardContent>
       </Card>
-      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4">
+        By clicking continue, you agree to our <Link className="hover:text-primary" href="#">Terms of Service</Link>{" "}
+        and <Link className="hover:text-primary" href="/#app">Privacy Policy</Link>.
       </div>
     </div>
   )
