@@ -1,5 +1,5 @@
-import {  LoginAdmin } from "@/lib/types"
-import { getDataAPI, postDataAPI } from '@/lib/fetchData'
+import { LoginAdmin } from "@/lib/types"
+import { getDataAPI, getTestDataApi, postDataAPI } from '@/lib/fetchData'
 import { AppDispatch } from "../store"
 
 export const TYPES = {
@@ -46,7 +46,7 @@ export const refreshToken = () => async (dispatch: AppDispatch) => {
         if (firstLogin)
             dispatch({ type: 'NOTIFY', payload: { loading: true } })
 
-        const res = await getDataAPI("refresh_token",token)
+        const res = await getDataAPI("refresh_token", token)
 
         dispatch({
             type: 'AUTH',
@@ -59,7 +59,7 @@ export const refreshToken = () => async (dispatch: AppDispatch) => {
             type: 'NOTIFY',
             payload: {}
         })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         const errorMessage = (error.response?.data?.message) || 'An error occurred';
         dispatch({
@@ -70,3 +70,42 @@ export const refreshToken = () => async (dispatch: AppDispatch) => {
         })
     }
 }
+
+
+// ! These are Testing Routes for cookies:Which does not work
+
+export const setCookieTest = () => async (dispatch: AppDispatch) => {
+    try {
+
+        const res = await getTestDataApi("set-cookie")
+
+        console.log(res.data)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+        const errorMessage = (error.response?.data?.message) || 'An error occurred';
+        dispatch({
+            type: 'NOTIFY',
+            payload: {
+                error: errorMessage
+            }
+        })
+    }
+}
+export const getCookieTest = () => async (dispatch: AppDispatch) => {
+    try {
+
+        const res = await getTestDataApi("get-cookie")
+
+        console.log(res.data)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+        const errorMessage = (error.response?.data?.message) || 'An error occurred';
+        dispatch({
+            type: 'NOTIFY',
+            payload: {
+                error: errorMessage
+            }
+        })
+    }
+}
+// ! End of Test Routes

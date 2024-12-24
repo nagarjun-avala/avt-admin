@@ -17,7 +17,13 @@ import { AppDispatch, RootState } from '@/redux/store';
 import { Label } from "@/components/ui/label"
 import {  LoginAdmin } from "@/lib/types"
 
+interface NotifyTypes {
+  notify: {
 
+    error?: string;
+
+  };
+}
 
 export function LoginForm({
   className,
@@ -29,7 +35,10 @@ export function LoginForm({
     password: "Admin@123",
     // Add other properties of Admin type if needed
   }
-  const notify = useSelector((state: RootState) => state.notify)
+
+
+  const notify = useSelector((state: RootState) => state.notify) as NotifyTypes['notify']
+
   const [userData, setUserData] = useState(initalState)
   const [typePass, setTypePass] = useState(true)
   const { username, password } = userData
