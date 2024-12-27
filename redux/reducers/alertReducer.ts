@@ -1,16 +1,14 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { GLOBALTYPES } from '../actions/globalTypes';
-const initialState = {
+const initialState = {}
 
-}
-
-const authReducer = (state = initialState, action: PayloadAction) => {
+const alertReducer = (state = initialState, action: PayloadAction) => {
     switch (action.type) {
-        case GLOBALTYPES.AUTH:
+        case GLOBALTYPES.ALERT:
             return action.payload;
         default:
             return state;
     }
 }
 
-export default authReducer;
+export default alertReducer;

@@ -2,16 +2,26 @@
 
 import * as React from "react"
 import {
+  BadgeIndianRupee,
+  Barcode,
+  BookUser,
   ClipboardPenLine,
-  Frame,
+  CornerDownLeft,
+  Flag,
   GalleryVerticalEnd,
+  ListOrdered,
+  Logs,
   Map,
+  MapPinned,
   Network,
   PieChart,
+  ServerCog,
+  UserRoundCog,
+  UsersRound,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
+import { AdministratorNavigation } from "@/components/nav-admin-access"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
 import {
@@ -32,15 +42,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   };
   const data = {
     user: {
-      name: auth?.admin?.fullname|| "",
-      role: auth?.admin?.role?.short|| "",
-      email: auth?.admin?.email|| "m@example.com",
-      avatar: "/avatars/shadcn.jpg",
+      name: auth?.admin?.fullname || "",
+      role: auth?.admin?.role?.short || "",
+      email: auth?.admin?.email || "m@example.com",
+      avatar: auth?.admin?.avatar || "/avatars/shadcn.jpg",
     },
     team: {
       name: "AV Traders",
       logo: GalleryVerticalEnd,
-      plan: "Admin",
+      plan: "Admin Dashboard",
     },
     navMain: [
       {
@@ -49,7 +59,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: ClipboardPenLine,
         isActive: true,
         items: [
-          { title: "All Products", url: "#" },
+          { title: "All Products", url: "/products" },
+          { title: "Transactions", url: "/inventory-transactions" },
           { title: "Create Product", url: "#" },
         ],
       },
@@ -63,10 +74,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ],
       },
     ],
-    projects: [
-      { name: "Design Engineering", url: "#", icon: Frame },
-      { name: "Sales & Marketing", url: "#", icon: PieChart },
-      { name: "Travel", url: "#", icon: Map },
+    adminAccess: [
+      { name: "Admins", isAcive: true, url: "/admins", icon: UserRoundCog },
+      { name: "Roles", isAcive: false, url: "/roles", icon: ServerCog },
+      { name: "Categories", isAcive: false, url: "/categories", icon: Network },
+      { name: "Barcodes", isAcive: false, url: "/barcodes", icon: Barcode },
+      { name: "Uers", isAcive: false, url: "/uers", icon: UsersRound },
+      { name: "Suppliers", isAcive: false, url: "/suppliers", icon: BookUser },
+      { name: "Discounts", isAcive: false, url: "/discounts", icon: BadgeIndianRupee },
+      { name: "Orders", isAcive: false, url: "/orders", icon: ListOrdered },
+      { name: "Return Orders", isAcive: false, url: "/returns", icon: CornerDownLeft },
+      { name: "Countries", isAcive: false, url: "/countries", icon: Flag },
+      { name: "States", isAcive: false, url: "/states", icon: Map },
+      { name: "Cities", isAcive: false, url: "/cities", icon: MapPinned },
+      { name: "Sales & Marketing", isAcive: false, url: "#", icon: PieChart },
+      { name: "Audit Logs", isAcive: false, url: "/audit-logs", icon: Logs },
     ],
   }
   return (
@@ -76,7 +98,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <AdministratorNavigation adminAccess={data.adminAccess} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
