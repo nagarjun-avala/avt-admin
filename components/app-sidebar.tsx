@@ -37,7 +37,7 @@ import { Admin } from "@/lib/types"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const auth = useSelector((state: RootState) => state.auth) as {
+  const auth = useSelector((state: RootState) => state.auth) as unknown as {
     admin?: Admin;
   };
   const data = {

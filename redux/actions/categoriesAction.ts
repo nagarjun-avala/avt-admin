@@ -3,21 +3,22 @@ import { AppDispatch } from "../store"
 import { GLOBALTYPES } from "./globalTypes"
 
 
-export const ROLE_TYPES = {
+export const CATEGORY_TYPES = {
     LOADING: 'LOADING',
-    GET_ALL_ROLES: 'GET_ALL_ROLES',
+    GET_ALL_CATEGORIES: 'GET_ALL_CATEGORIES',
 }
 
-export const getAllRoles = ({ token }: { token: string }) => async (dispatch: AppDispatch) => {
+export const getAllCategories = ({ token }: { token: string }) => async (dispatch: AppDispatch) => {
     try {
-        dispatch({ type: ROLE_TYPES.LOADING, payload: true })
-        const res = await getDataAPI("role", token)
+        dispatch({ type: CATEGORY_TYPES.LOADING, payload: true })
+        const res = await getDataAPI("category", token)
+
         dispatch({
-            type: ROLE_TYPES.GET_ALL_ROLES,
-            payload: res?.data?.roles
+            type: CATEGORY_TYPES.GET_ALL_CATEGORIES,
+            payload: res?.data?.categories
         })
         dispatch({
-            type: ROLE_TYPES.LOADING,
+            type: CATEGORY_TYPES.LOADING,
             payload: false
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

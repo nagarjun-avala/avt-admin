@@ -1,12 +1,11 @@
-import { Role } from "@/lib/types"
+import { Admin } from "@/lib/types"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
-import { formatDateTime } from "@/lib/utils"
 
 
-export const columns: ColumnDef<Partial<Role>>[] = [
+export const columns: ColumnDef<Partial<Admin>>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -37,14 +36,7 @@ export const columns: ColumnDef<Partial<Role>>[] = [
         ),
     },
     {
-        accessorKey: "code",
-        header: "Code",
-        cell: ({ row }) => (
-            <div className="capitalize" >{row.getValue("code")} / {row.original.short}</div>
-        ),
-    },
-    {
-        accessorKey: "label",
+        accessorKey: "name",
         header: ({ column }) => {
             return (
                 <Button
@@ -52,29 +44,27 @@ export const columns: ColumnDef<Partial<Role>>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
                     }
                 >
-                    Label
+                    Name
                     < ArrowUpDown />
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="" > {row.getValue("label")} </div>,
+        cell: ({ row }) => <div className="" > {row.getValue("name")} </div>,
     },
     {
-        accessorKey: "createdAt",
-        header: "Created On",
-        cell: ({ row }) => (
-            <div className="capitalize" >
-                {formatDateTime(row.getValue("createdAt"))}
-            </div>
-        ),
-    },
-    {
-        accessorKey: "updatedAt",
-        header: "Updated On",
-        cell: ({ row }) => (
-            <div className="capitalize" >
-                {formatDateTime(row.getValue("updatedAt"))}
-            </div>
-        ),
+        accessorKey: "slug",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >
+                    Slug
+                    < ArrowUpDown />
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div> {row.getValue("slug")} </div>,
     },
 ]

@@ -34,13 +34,13 @@ import {
 
 import { columns } from './columns'
 
-interface AdminsDataTableProps {
+interface RolesDataTableProps {
     search: string;
     searchKey: string;
     data: any[];
 }
 
-export default function AdminsDataTable({ search, searchKey, data }: AdminsDataTableProps) {
+export default function RolesDataTable({ search, searchKey, data }: RolesDataTableProps) {
 
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

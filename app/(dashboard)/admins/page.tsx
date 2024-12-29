@@ -7,7 +7,7 @@ import ComponentLoader from '@/components/global/ComponentLoader'
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/redux/store"
 import { getAllAdmins } from "@/redux/actions/adminsAction"
-const AdminPage = () => {
+const AdminsPage = () => {
 
 
     const dispatch = useDispatch<AppDispatch>()
@@ -31,4 +31,4 @@ const AdminPage = () => {
     )
 }
 
-export default AdminPage
+export default AdminsPage

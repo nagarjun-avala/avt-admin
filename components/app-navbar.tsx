@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/sidebar"
 import { usePathname } from "next/navigation"
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const BreadCrumLinks = [
   {
     link: "/roles",
