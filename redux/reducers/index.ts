@@ -1,8 +1,12 @@
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 import auth from './authReducer'
-import notify from './notifyReducer'
+import alert from './alertReducer'
+import roles from './rolesReducer'
+import admins from './adminsReducer'
 
 export default combineReducers({
     auth,
-    notify
+    alert,
+    roles,
+    admins,
 })

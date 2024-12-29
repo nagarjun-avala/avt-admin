@@ -1,28 +1,24 @@
-import { LoginAdmin } from "@/lib/types"
+import { Admin } from "../../lib/types"
 import { getDataAPI, getTestDataApi, postDataAPI } from '@/lib/fetchData'
 import { AppDispatch } from "../store"
+import { GLOBALTYPES } from "./globalTypes"
 
-export const TYPES = {
-    AUTH: 'AUTH',
-}
-
-export const login = (data: Partial<LoginAdmin>) => async (dispatch: AppDispatch) => {
+export const login = (data: Partial<Admin>) => async (dispatch: AppDispatch) => {
     try {
-        dispatch({ type: 'NOTIFY', payload: { loading: true } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
         const res = await postDataAPI("login", data)
 
         dispatch({
-            type: 'AUTH',
+            type: GLOBALTYPES.AUTH,
             payload: {
                 token: res?.data?.access_token,
                 admin: res?.data?.admin
             }
         })
 
-        localStorage.setItem("firstLogin", "true")
         localStorage.setItem("token", res?.data?.access_token)
         dispatch({
-            type: 'NOTIFY',
+            type: GLOBALTYPES.ALERT,
             payload: {
                 success: res.data.message
             }
@@ -39,31 +35,49 @@ export const login = (data: Partial<LoginAdmin>) => async (dispatch: AppDispatch
     }
 }
 
+export const logout = () => async (dispatch: AppDispatch) => {
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+
+        localStorage.removeItem("token")
+        await getDataAPI("logout")
+
+        window.location.href = '/login'
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+        const errorMessage = (error.response?.data?.message) || 'An error occurred';
+        dispatch({
+            type: 'NOTIFY',
+            payload: {
+                error: errorMessage
+            }
+        })
+    }
+}
+
 export const refreshToken = () => async (dispatch: AppDispatch) => {
     try {
-        const firstLogin = localStorage.getItem('firstLogin')
         const token = localStorage.getItem('token') || ""
-        if (firstLogin)
-            dispatch({ type: 'NOTIFY', payload: { loading: true } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
 
         const res = await getDataAPI("refresh_token", token)
 
         dispatch({
-            type: 'AUTH',
+            type: GLOBALTYPES.AUTH,
             payload: {
                 token: res?.data?.access_token,
                 admin: res?.data?.admin
             }
         })
         dispatch({
-            type: 'NOTIFY',
+            type: GLOBALTYPES.ALERT,
             payload: {}
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         const errorMessage = (error.response?.data?.message) || 'An error occurred';
         dispatch({
-            type: 'NOTIFY',
+            type: GLOBALTYPES.ALERT,
             payload: {
                 error: errorMessage
             }
