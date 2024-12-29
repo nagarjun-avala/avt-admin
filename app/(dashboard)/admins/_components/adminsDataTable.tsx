@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import * as React from "react"
@@ -32,30 +33,14 @@ import {
 } from "@/components/ui/table"
 
 import { columns } from './columns'
-import { Admin } from "@/lib/types"
 
-const data: Partial<Admin>[] = [
-    {
-        id: "m5gr84i9",
-        avatar: "",
-        username: "nagarjun_1008",
-        fullname: "Nagarjun Avala",
-        email: "nagarjun.avala.official@gmail.com",
-        mobile: "8374017459",
-        roleId: "qwer",
-        isActive: true,
-        lastLoginAt: "None",
-        theme: "light",
-        currency: "INR",
-        createdByAdminId: "Advaith",
-        updatedByAdminId: "Advaith",
-        createdAt: "",
-        updatedAt: "",
+interface AdminsDataTableProps {
+    search: string;
+    searchKey: string;
+    data: any[];
+}
 
-    }
-]
-
-export default function AdminDataTable() {
+export default function AdminsDataTable({ search, searchKey, data }: AdminsDataTableProps) {
 
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -88,10 +73,10 @@ export default function AdminDataTable() {
         <div className="w-full">
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                    placeholder={`Filter ${search}...`}
+                    value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
+                        table.getColumn(searchKey)?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
                 />

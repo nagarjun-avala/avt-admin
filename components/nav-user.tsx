@@ -30,6 +30,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { logout } from "@/redux/actions/authAction"
+import { useDispatch } from "react-redux"
+import { AppDispatch } from '@/redux/store';
 
 export function NavUser({
   user,
@@ -43,6 +46,7 @@ export function NavUser({
 
 }) {
   const { isMobile } = useSidebar()
+  const dispatch = useDispatch<AppDispatch>()
 
   const matches = user.name.match(/\b(\w)/g);
   const avatarFallbackText = matches ? matches.join('') : 'AZ'
@@ -112,7 +116,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => dispatch(logout())}>
               <LogOut />
               Log out
             </DropdownMenuItem>

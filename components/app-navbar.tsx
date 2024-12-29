@@ -13,6 +13,17 @@ import {
 } from "@/components/ui/sidebar"
 import { usePathname } from "next/navigation"
 
+const BreadCrumLinks = [
+  {
+    link: "/roles",
+    label: "All Roles"
+  },
+  {
+    link: "/admins",
+    label: "All Admins"
+  },
+]
+
 const AppNavbar = () => {
   const pathname = usePathname()
   console.log(pathname)

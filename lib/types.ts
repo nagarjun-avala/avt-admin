@@ -64,37 +64,37 @@ export interface Role {
     code: string;
     label: string;
     short: string;
-    description?: string | null;
+    description?: string | "";
     isActive: boolean;
     type: RoleType;
     priority: number;
-    activatedAt?: string | null;
+    activatedAt?: string | "";
     canDelete: boolean;
     canUpdate: boolean;
     canCreateProduct: boolean;
     canViewReports: boolean;
-    createdById?: string | null;
-    updatedById?: string | null;
+    createdById?: string | "";
+    updatedById?: string | "";
     createdAt: string;
     updatedAt: string;
 }
 
 export interface Admin {
     id: string;
-    avatar?: string | null;
+    avatar?: string | "";
     username: string;
     password: string;
     fullname: string;
-    email?: string | null;
-    mobile?: string | null;
+    email?: string | "";
+    mobile?: string | "";
     roleId: string;
     role: Role;
     isActive: boolean;
-    lastLoginAt?: string | null;
+    lastLoginAt?: string | "";
     theme: string;
     currency: string;
-    createdByAdminId?: string | null;
-    updatedByAdminId?: string | null;
+    createdByAdminId?: string | "";
+    updatedByAdminId?: string | "";
     createdAt: string;
     updatedAt: string;
 }
@@ -102,7 +102,7 @@ export interface Admin {
 export interface Review {
     id: string;
     rating: number;
-    comment?: string | null;
+    comment?: string | "";
     userId: string;
     productId: string;
     isVerified: boolean;
@@ -114,7 +114,7 @@ export interface Product {
     id: string;
     barcodeId: string;
     name: string;
-    description?: string | null;
+    description?: string | "";
     categoryId: string;
     price: number;
     stockQty: bigint;
@@ -129,7 +129,7 @@ export interface Product {
 export interface Image {
     id: string;
     url: string;
-    altText?: string | null;
+    altText?: string | "";
     productId: string;
     createdAt: string;
     updatedAt: string;
@@ -139,13 +139,13 @@ export interface Category {
     id: string;
     name: string;
     slug: string;
-    description?: string | null;
-    parentId?: string | null;
+    description?: string | "";
+    parentId?: string | "";
     level: number;
     displayOrder: number;
     isActive: boolean;
-    createdBy?: string | null;
-    updatedBy?: string | null;
+    createdBy?: string | "";
+    updatedBy?: string | "";
     createdAt: string;
     updatedAt: string;
 }
@@ -154,9 +154,9 @@ export interface Supplier {
     id: string;
     name: string;
     mobile: string;
-    email?: string | null;
-    website?: string | null;
-    addressId?: string | null;
+    email?: string | "";
+    website?: string | "";
+    addressId?: string | "";
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
@@ -165,7 +165,7 @@ export interface Supplier {
 export interface Barcode {
     id: string;
     code: string;
-    ean13?: string | null;
+    ean13?: string | "";
     type: BarcodeType;
     createdAt: string;
     updatedAt: string;
@@ -175,7 +175,7 @@ export interface User {
     id: string;
     email: string;
     name: string;
-    mobile?: string | null;
+    mobile?: string | "";
     createdAt: string;
     updatedAt: string;
 }
@@ -303,7 +303,7 @@ export interface InventoryAdjustment {
     productId: string;
     quantity: number;
     adjustmentType: AdjustmentType;
-    reason?: string | null;
+    reason?: string | "";
     createdBy: string;
     createdAt: string;
     updatedAt: string;
@@ -351,7 +351,7 @@ export interface ReturnProduct {
 export interface Discount {
     id: string;
     code: string;
-    description?: string | null;
+    description?: string | "";
     amount: number;
     percentage: boolean;
     startDate: string;
@@ -376,9 +376,9 @@ export interface AuditLog {
     entity: string;
     entityId: string;
     action: string;
-    details?: string | null;
+    details?: string | "";
     adminId: string;
-    ipAddress?: string | null;
+    ipAddress?: string | "";
     createdAt: string;
     updatedAt: string;
 }

@@ -2,7 +2,6 @@ import { Admin } from "../../lib/types"
 import { getDataAPI, getTestDataApi, postDataAPI } from '@/lib/fetchData'
 import { AppDispatch } from "../store"
 import { GLOBALTYPES } from "./globalTypes"
-import { get } from "http"
 
 export const login = (data: Partial<Admin>) => async (dispatch: AppDispatch) => {
     try {
@@ -17,7 +16,6 @@ export const login = (data: Partial<Admin>) => async (dispatch: AppDispatch) => 
             }
         })
 
-        localStorage.setItem("firstLogin", "true")
         localStorage.setItem("token", res?.data?.access_token)
         dispatch({
             type: GLOBALTYPES.ALERT,
@@ -40,21 +38,11 @@ export const login = (data: Partial<Admin>) => async (dispatch: AppDispatch) => 
 export const logout = () => async (dispatch: AppDispatch) => {
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
-        const res = await getDataAPI("logout")
 
-        dispatch({
-            type: GLOBALTYPES.AUTH,
-            payload: {}
-        })
+        localStorage.removeItem("token")
+        await getDataAPI("logout")
 
-        localStorage.setItem("firstLogin", "true")
-        localStorage.setItem("token", res?.data?.access_token)
-        dispatch({
-            type: GLOBALTYPES.ALERT,
-            payload: {
-                success: res.data.message
-            }
-        })
+        window.location.href = '/login'
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         const errorMessage = (error.response?.data?.message) || 'An error occurred';
@@ -69,10 +57,8 @@ export const logout = () => async (dispatch: AppDispatch) => {
 
 export const refreshToken = () => async (dispatch: AppDispatch) => {
     try {
-        const firstLogin = localStorage.getItem('firstLogin')
         const token = localStorage.getItem('token') || ""
-        if (firstLogin)
-            dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
+        dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
 
         const res = await getDataAPI("refresh_token", token)
 

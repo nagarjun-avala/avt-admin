@@ -1,7 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { GLOBALTYPES } from '../actions/globalTypes';
 const initialState = {
-
+    token: "",
+    admin: {},
 }
 
 const authReducer = (state = initialState, action: PayloadAction) => {
