@@ -15,13 +15,11 @@ import { login } from "@/redux/actions/authAction"
 import Link from "next/link"
 import { AppDispatch, RootState } from '@/redux/store';
 import { Label } from "@/components/ui/label"
-import {  LoginAdmin } from "@/lib/types"
+import { Admin } from "@/lib/types"
 
-interface NotifyTypes {
-  notify: {
-
+interface AlertTypes {
+  alert: {
     error?: string;
-
   };
 }
 
@@ -30,14 +28,13 @@ export function LoginForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   // TODO: Empty init data after completion of login development *Authentication* 
-  const initalState: Partial<LoginAdmin> = {
+  const initalState: Partial<Admin> = {
     username: "admin",
     password: "Admin@123",
-    // Add other properties of Admin type if needed
   }
 
 
-  const notify = useSelector((state: RootState) => state.notify) as NotifyTypes['notify']
+  const alert = useSelector((state: RootState) => state.alert) as AlertTypes['alert']
 
   const [userData, setUserData] = useState(initalState)
   const [typePass, setTypePass] = useState(true)
@@ -56,7 +53,7 @@ export function LoginForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log(userData)
-    dispatch(login(userData))    
+    dispatch(login(userData))
   }
 
   return (
@@ -66,7 +63,7 @@ export function LoginForm({
           <CardTitle className="text-xl">Welcome back</CardTitle>
         </CardHeader>
         <CardContent>
-          
+
           <form onSubmit={handleSubmit}>
             <div className="grid gap-6 mb-5">
               <div className="grid gap-6">
@@ -95,11 +92,11 @@ export function LoginForm({
                     required />
                   <small className="cursor-pointer absolute top-[70%] right-2 translate-y-[-50%] opacity-50" onClick={() => setTypePass(!typePass)}>{typePass ? "Show" : "Hide"}</small>
                 </div>
-                {notify?.error && <p
+                {alert?.error && <p
                   className={cn("text-sm text-center font-medium text-destructive")}
                   {...props}
                 >
-                  ! {notify?.error}
+                  ! {alert?.error}
                 </p>}
                 <Button type="submit" className="w-full">
                   Login
