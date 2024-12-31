@@ -23,6 +23,7 @@ export const login = (data: Partial<Admin>) => async (dispatch: AppDispatch) => 
                 success: res.data.message
             }
         })
+        window.location.href = "/"
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         const errorMessage = (error.response?.data?.message) || 'An error occurred';
