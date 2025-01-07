@@ -15,6 +15,10 @@ export const login = (data: Partial<Admin>) => async (dispatch: AppDispatch) => 
                 admin: res?.data?.admin
             }
         })
+        dispatch({
+            type: GLOBALTYPES.CONFIG,
+            payload: res?.data?.config
+        })
 
         localStorage.setItem("token", res?.data?.access_token)
         dispatch({
@@ -23,6 +27,7 @@ export const login = (data: Partial<Admin>) => async (dispatch: AppDispatch) => 
                 success: res.data.message
             }
         })
+        window.location.href = "/"
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         const errorMessage = (error.response?.data?.message) || 'An error occurred';
@@ -68,6 +73,10 @@ export const refreshToken = () => async (dispatch: AppDispatch) => {
                 token: res?.data?.access_token,
                 admin: res?.data?.admin
             }
+        })
+        dispatch({
+            type: GLOBALTYPES.CONFIG,
+            payload: res?.data?.config
         })
         dispatch({
             type: GLOBALTYPES.ALERT,

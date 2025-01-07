@@ -7,6 +7,8 @@ import ComponentLoader from '@/components/global/ComponentLoader'
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/redux/store"
 import { getAllAdmins } from "@/redux/actions/adminsAction"
+import { Button } from '@/components/ui/button'
+import CreateAdminDialog from './_components/CreateAdminDialog'
 const AdminsPage = () => {
 
 
@@ -20,6 +22,8 @@ const AdminsPage = () => {
     }, [auth.token, dispatch])
     return (
         <>
+            <CreateAdminDialog trigger={<Button>Add Admin</Button>} />
+
             {admins.loading
                 ? <ComponentLoader />
                 : <AdminsDataTable

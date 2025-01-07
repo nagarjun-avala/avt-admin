@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
+import { formatDateTime } from "@/lib/utils"
 
 
 export const columns: ColumnDef<Partial<Admin>>[] = [
@@ -84,17 +85,22 @@ export const columns: ColumnDef<Partial<Admin>>[] = [
         cell: ({ row }) => <div className="lowercase" > {row.getValue("email")} </div>,
     },
     {
+        accessorKey: "lastLoginAt",
+        header: "Last Login",
+        cell: ({ row }) => <div className="lowercase" > {formatDateTime(row.getValue("lastLoginAt"))} </div>,
+    },
+    {
         accessorKey: "createdByAdminId",
         header: "Created By",
         cell: ({ row }) => (
-            <div className="capitalize" >{row.getValue("createdByAdminId")}</div>
+            <div className="capitalize" >{row.getValue("createdByAdminId") || "N/A"}</div>
         ),
     },
     {
         accessorKey: "updatedByAdminId",
         header: "Updated By",
         cell: ({ row }) => (
-            <div className="capitalize" >{row.getValue("updatedByAdminId")}</div>
+            <div className="capitalize" >{row.getValue("updatedByAdminId") || "N/A"}</div>
         ),
     },
 ]

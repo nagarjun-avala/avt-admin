@@ -217,8 +217,6 @@ export interface Country {
     longitude: string;
     emoji: string;
     emojiU: string;
-    createdAt: string;
-    updatedAt: string;
 }
 
 export interface State {
