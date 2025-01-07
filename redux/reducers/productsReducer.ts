@@ -1,19 +1,19 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { CATEGORY_TYPES } from '../actions/categoriesAction';
-import { Category } from '@/lib/types';
-const initialState: { loading: boolean, data: Category[] } = {
+import { Product } from '@/lib/types';
+import { PRODUCT_TYPES } from './../actions/productsAction';
+const initialState: { loading: boolean, data: Product[] } = {
     loading: false,
     data: []
 }
 
-const categoriesReducer = (state = initialState, action: PayloadAction) => {
+const productsReducer = (state = initialState, action: PayloadAction) => {
     switch (action.type) {
-        case CATEGORY_TYPES.LOADING:
+        case PRODUCT_TYPES.LOADING:
             return {
                 ...state,
                 loading: action.payload
             };
-        case CATEGORY_TYPES.GET_ALL_CATEGORIES:
+        case PRODUCT_TYPES.GET_ALL_PRODUCTS:
             return {
                 ...state,
                 data: action.payload
@@ -23,4 +23,4 @@ const categoriesReducer = (state = initialState, action: PayloadAction) => {
     }
 }
 
-export default categoriesReducer;
+export default productsReducer;

@@ -15,6 +15,10 @@ export const login = (data: Partial<Admin>) => async (dispatch: AppDispatch) => 
                 admin: res?.data?.admin
             }
         })
+        dispatch({
+            type: GLOBALTYPES.CONFIG,
+            payload: res?.data?.config
+        })
 
         localStorage.setItem("token", res?.data?.access_token)
         dispatch({
@@ -69,6 +73,10 @@ export const refreshToken = () => async (dispatch: AppDispatch) => {
                 token: res?.data?.access_token,
                 admin: res?.data?.admin
             }
+        })
+        dispatch({
+            type: GLOBALTYPES.CONFIG,
+            payload: res?.data?.config
         })
         dispatch({
             type: GLOBALTYPES.ALERT,

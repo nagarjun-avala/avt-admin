@@ -1,7 +1,7 @@
 import axios from 'axios'
 const api = process.env.NEXT_PUBLIC_APP_ENV == 'development' ? process.env.NEXT_PUBLIC_API_URL_DEV : process.env.NEXT_PUBLIC_API_URL_PRO
 
-axios.defaults.baseURL = api
+// axios.defaults.baseURL = api
 
 export const getDataAPI = async (url: string, token?: string) => {
     return await axios.get(`${api}/api/${url}`, {

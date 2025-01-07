@@ -7,7 +7,6 @@ export const expenseSchema = z.object({
     label: z.string(),
     note: z.string(),
     category: z.string(),
-    type: z.enum(["income", "expense"]),
     amount: z.number(),
     date: z.string()
 });
